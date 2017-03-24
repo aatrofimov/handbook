@@ -15,6 +15,7 @@ abstract class AbstractWorker {
         set(value) {
             validateNonNegative(value)
             field = value
+        }
 
     /**
      * Получение способа начисления зарплаты

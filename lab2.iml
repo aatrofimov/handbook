@@ -9,6 +9,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
+    <orderEntry type="library" name="controlsfx-8.0.6_20" level="application" />
     <orderEntry type="library" name="junit" level="project" />
     <orderEntry type="library" name="guava" level="project" />
     <orderEntry type="library" name="hamcrest-core" level="project" />

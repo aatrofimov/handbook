@@ -1,4 +1,6 @@
-import model.*
+package com.app
+
+import com.app.model.*
 
 /**
  * Created by IntelliJ IDEA.<br>

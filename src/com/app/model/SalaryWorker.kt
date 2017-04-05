@@ -1,4 +1,6 @@
-package model
+package com.app.model
+
+import com.google.common.base.*
 
 /**
  * Created by IntelliJ IDEA.<br>
@@ -20,6 +22,7 @@ class SalaryWorker() : AbstractWorker() {
             validateIsPositive(value)
             field = value
         }
+
     override fun getSalaryType(): SalaryType {
         return SalaryType.Salary
     }
@@ -28,4 +31,16 @@ class SalaryWorker() : AbstractWorker() {
         return duration.times(salary)
     }
 
+    override fun getRate(): Double = salary
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is SalaryWorker || !this.javaClass.equals(other.javaClass)) {
+            return false
+        }
+        return super.equals(other) && salary.equals(other.salary)
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hashCode(effortInterval, salary)
+    }
 }

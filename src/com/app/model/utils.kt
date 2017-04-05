@@ -1,11 +1,11 @@
-package model
+package com.app.model
 
 /**
  * Created by IntelliJ IDEA.<br>
  * User: Alexey<br>
  * Date: 25.03.2017<br>
  * Time: 1:38<br>
- * todo javadoc
+ * Утилиты
  */
 
 /**

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="246.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.92" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.view.WorkerEditDialogController">
+   <children>
+      <ComboBox fx:id="salaryTypeCombobox" layoutX="38.0" layoutY="21.0" prefHeight="25.0" prefWidth="237.0" />
+      <Label layoutX="53.0" layoutY="6.0" text="Тип зарплаты" />
+      <Label layoutX="53.0" layoutY="70.0" text="Коэффициент зарплаты" />
+      <TextField fx:id="rateInput" layoutX="38.0" layoutY="87.0" prefHeight="25.0" prefWidth="237.0" />
+      <Label layoutX="53.0" layoutY="129.0" text="Интервал" />
+      <TextField fx:id="effortIntervalInput" layoutX="38.0" layoutY="146.0" prefHeight="25.0" prefWidth="237.0" />
+      <Button layoutX="27.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleSave" text="ОК" />
+      <Button layoutX="223.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleCancel" text="Отмена" />
+      <Button fx:id="randomDataButton" layoutX="100" layoutY="200.0" mnemonicParsing="false" onAction="#handleGetRandomData" text="Random Data" />
+   </children>
+</AnchorPane>

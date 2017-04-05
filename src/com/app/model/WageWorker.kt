@@ -1,4 +1,6 @@
-package model
+package com.app.model
+
+import com.google.common.base.*
 
 /**
  * Created by IntelliJ IDEA.<br>
@@ -27,5 +29,18 @@ class WageWorker() : AbstractWorker() {
 
     override fun getSalaryInternal(duration: Double): Double {
         return duration.times(wage)
+    }
+
+    override fun getRate(): Double = wage
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is WageWorker || !this.javaClass.equals(other.javaClass)) {
+            return false
+        }
+        return super.equals(other) && wage.equals(other.wage)
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hashCode(effortInterval, wage)
     }
 }

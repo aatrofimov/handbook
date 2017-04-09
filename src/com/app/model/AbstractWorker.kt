@@ -37,6 +37,15 @@ abstract class AbstractWorker
         }
 
     /**
+     * Количество отработанных часов
+     */
+    var workTime: Double = .0
+        set(value) {
+            validateWorkTime(value)
+            field = value
+        }
+
+    /**
      * Получение способа начисления зарплаты
      */
     abstract fun getSalaryType(): SalaryType
@@ -45,6 +54,11 @@ abstract class AbstractWorker
      * Расчет зарплаты за заданный интервал времени
      */
     abstract fun getSalary(): Double
+
+    /**
+     * Ставка для текущей зарплаты
+     */
+    abstract fun getRate(): Double
 
     override fun equals(other: Any?): Boolean {
         if (other !is AbstractWorker || this.javaClass != other.javaClass) {

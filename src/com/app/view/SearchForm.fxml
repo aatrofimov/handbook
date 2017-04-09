@@ -6,9 +6,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.92" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.view.SearchFormController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.92" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.view.SearchFormController">
 <children>
-	<TableView fx:id="workersTable" prefHeight="337.0" prefWidth="600.0" stylesheets="@DarkTheme.css">
+	<TableView fx:id="workersTable" prefHeight="337.0" prefWidth="600.0">
 		<columns>
 			<TableColumn fx:id="salaryTypeCol" prefWidth="127.0" text="Тип зарплаты" />
 			<TableColumn fx:id="rateCol" prefWidth="144.0" text="Коэффициент зарплаты" />

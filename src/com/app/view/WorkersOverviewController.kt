@@ -39,6 +39,34 @@ class WorkersOverviewController {
     private lateinit var workersTable: TableView<AbstractWorker>
 
     /**
+     * Колонка "Имя"
+     * @see AbstractWorker.name
+     */
+    @FXML
+    private lateinit var nameCol: TableColumn<AbstractWorker, String>
+
+    /**
+     * Колонка "Фамилия"
+     * @see AbstractWorker.surname
+     */
+    @FXML
+    private lateinit var surnameCol: TableColumn<AbstractWorker, String>
+
+    /**
+     * Колонка "Дата начала работы"
+     * @see AbstractWorker.beginDate
+     */
+    @FXML
+    private lateinit var beginDateCol: TableColumn<AbstractWorker, String>
+
+    /**
+     * Колонка "Дата окончания работы"
+     * @see AbstractWorker.endDate
+     */
+    @FXML
+    private lateinit var endDateCol: TableColumn<AbstractWorker, String>
+
+    /**
      * Колонка "Тип зарплаты"
      * @see AbstractWorker.getSalaryType
      */
@@ -46,18 +74,19 @@ class WorkersOverviewController {
     private lateinit var salaryTypeCol: TableColumn<AbstractWorker, String>
 
     /**
-     * Колонка "Коэффициент зарплаты"
-     * @see AbstractWorker.getRate
+     * Колонка "Ставка"
+     * @see HourWorker.hourRate
+     * @see WageWorker.wage
      */
     @FXML
     private lateinit var rateCol: TableColumn<AbstractWorker, Number>
 
     /**
      * Колонка "Интервал"
-     * @see AbstractWorker.effortInterval
+     * @see AbstractWorker.workTime
      */
     @FXML
-    private lateinit var effortIntervalCol: TableColumn<AbstractWorker, Number>
+    private lateinit var workTimeCol: TableColumn<AbstractWorker, Number>
 
     /**
      * Колонка "Зарплата"
@@ -71,9 +100,14 @@ class WorkersOverviewController {
      */
     @FXML
     private fun initialize() {
+        nameCol.setCellValueFactory { SimpleStringProperty(it.value.name) }
+        surnameCol.setCellValueFactory { SimpleStringProperty(it.value.surname) }
+        beginDateCol.setCellValueFactory { SimpleStringProperty(it.value.beginDate.toString()) }
+        endDateCol.setCellValueFactory { SimpleStringProperty(it.value.endDate?.toString() ?: "") }
         salaryTypeCol.setCellValueFactory { SimpleStringProperty(it.value.getSalaryType().toString()) }
         rateCol.setCellValueFactory { SimpleDoubleProperty(it.value.getRate()) }
-        effortIntervalCol.setCellValueFactory { SimpleDoubleProperty(it.value.effortInterval) }
+        workTimeCol.setCellValueFactory { SimpleDoubleProperty(it.value.workTime) }
+        workTimeCol.setCellValueFactory { SimpleDoubleProperty((it.value as WageWorker).workTimeNorm) }
         salaryCol.setCellValueFactory { SimpleDoubleProperty(it.value.getSalary()) }
     }
 

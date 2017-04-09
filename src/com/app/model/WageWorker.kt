@@ -30,15 +30,6 @@ class WageWorker(name: String, surname: String, beginDate: LocalDate) :
         }
 
     /**
-     * Количество отработанных часов в месяц
-     */
-    var workTime = .0
-        set(value) {
-            validateWorkTime(value)
-            field = value
-        }
-
-    /**
      * Оклад
      */
     var wage: Double = .0
@@ -52,6 +43,8 @@ class WageWorker(name: String, surname: String, beginDate: LocalDate) :
     override fun getSalaryType(): SalaryType {
         return SalaryType.Wage
     }
+
+    override fun getRate(): Double = Math.floor(100 * wage) / 100
 
     override fun equals(other: Any?): Boolean {
         if (other !is WageWorker || this.javaClass != other.javaClass) {

@@ -78,8 +78,8 @@ class SearchFormController {
     @FXML
     private fun initialize() {
         salaryTypeCol.setCellValueFactory { SimpleStringProperty(it.value.getSalaryType().toString()) }
-        rateCol.setCellValueFactory { SimpleDoubleProperty(it.value.getRate()) }
-        effortIntervalCol.setCellValueFactory { SimpleDoubleProperty(it.value.effortInterval) }
+        //rateCol.setCellValueFactory { SimpleDoubleProperty(it.value.getRate()) }
+       // effortIntervalCol.setCellValueFactory { SimpleDoubleProperty(it.value.effortInterval) }
         salaryCol.setCellValueFactory { SimpleDoubleProperty(it.value.getSalary()) }
     }
 
@@ -89,12 +89,12 @@ class SearchFormController {
     @FXML
     private fun handleSearch() {
         val searchVal = searchField.text
-        workersTable.items.setAll(FXCollections.observableArrayList<AbstractWorker>(mainApp!!.workersData).filter {
-            it.effortInterval.toString().contains(searchVal, true) ||
-                    it.getRate().toString().contains(searchVal, true) ||
-                    it.getSalaryType().toString().contains(searchVal, true) ||
-                    it.getSalary().toString().contains(searchVal, true)
-        })
+//        workersTable.items.setAll(FXCollections.observableArrayList<AbstractWorker>(mainApp!!.workersData).filter {
+//            it.effortInterval.toString().contains(searchVal, true) ||
+//                    it.getRate().toString().contains(searchVal, true) ||
+//                    it.getSalaryType().toString().contains(searchVal, true) ||
+//                    it.getSalary().toString().contains(searchVal, true)
+//        })
     }
 
     /**

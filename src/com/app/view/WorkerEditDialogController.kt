@@ -24,6 +24,18 @@ class WorkerEditDialogController {
     lateinit var salaryTypeCombobox: ComboBox<String>
 
     /**
+     * Тествое поле ввода имени работника
+     */
+    @FXML
+    lateinit var nameInput: TextField
+
+    /**
+     * Тествое поле ввода фамилии
+     */
+    @FXML
+    lateinit var surnameInput: TextField
+
+    /**
      * Тествое поле ввода коэффициента зарплаты
      */
     @FXML
@@ -33,7 +45,37 @@ class WorkerEditDialogController {
      * Текстовое поле ввода трудозатрат
      */
     @FXML
-    lateinit var effortIntervalInput: TextField
+    lateinit var workTime: TextField
+
+    /**
+     * Текстовое поле ввода нормы рабочего времени
+     */
+    @FXML
+    lateinit var workTimeNorm: TextField
+
+    /**
+     * Поле ввода даты начала работы
+     */
+    @FXML
+    lateinit var beginDate: DatePicker
+
+    /**
+     * Поле ввода даты окончания работы
+     */
+    @FXML
+    lateinit var endDate: DatePicker
+
+    /**
+     * label для поля ставки/почасовая ставки
+     */
+    @FXML
+    lateinit var rateLabel: Label
+
+    /**
+     * label для поля нормы рабочего времени
+     */
+    @FXML
+    lateinit var workTimeNormLabel: Label
 
     /**
      * Кнопка для получения случайных значений на форме
@@ -60,6 +102,7 @@ class WorkerEditDialogController {
     private fun initialize() {
         salaryTypeCombobox.items.addAll(SalaryType.values().map { it.toString() })
         randomDataButton.isVisible = DEBUG_MODE
+        setVisible(false)
     }
 
     /**
@@ -89,9 +132,25 @@ class WorkerEditDialogController {
     private fun handleGetRandomData() {
         val rnd = ThreadLocalRandom.current()
         rateInput.text = rnd.nextInt(1000).toString()
-        effortIntervalInput.text = rnd.nextInt(1000).toString()
+        workTime.text = rnd.nextInt(1000).toString()
         val types = SalaryType.values()
         salaryTypeCombobox.value = types[rnd.nextInt(types.size)].toString()
+    }
+
+    @FXML
+    private fun onSalaryTypeChanged() {
+        if (salaryTypeCombobox.value == SalaryType.Hour.toString()) {
+            rateLabel.text = "Часовая ставка"
+            setVisible(false)
+        } else if (salaryTypeCombobox.value == SalaryType.Wage.toString()) {
+            rateLabel.text = "Cтавка"
+            setVisible(true)
+        }
+    }
+
+    private fun setVisible(isVisible: Boolean) {
+        workTimeNormLabel.isVisible = isVisible
+        workTimeNorm.isVisible = isVisible
     }
 
     /**
@@ -105,10 +164,20 @@ class WorkerEditDialogController {
             isValid = false
             errorMsg += "невалидное значение коэффициента зарплаты"
         }
-        val effort = effortIntervalInput.text.toDoubleOrNull()
-        if (effort == null || effort < 0) {
+        val workTime = workTime.text.toDoubleOrNull()
+        if (workTime == null || workTime < 0) {
             isValid = false
             errorMsg += "\nневалидное значение трудозатрат"
+        }
+        val begin = beginDate.value
+        if (begin == null) {
+            isValid = false
+            errorMsg += "\nдолжна быть введена дата начала работы"
+        }
+        val end = endDate.value
+        if (begin != null && end != null && beginDate.value.isAfter(endDate.value)) {
+            isValid = false
+            errorMsg += "\nдата окончания работы не может быть раньше даты начала работы"
         }
         if (!isValid) {
             val dialog = Alert(Alert.AlertType.WARNING)
@@ -124,17 +193,42 @@ class WorkerEditDialogController {
      * @return Тип выбранной зарплаты
      * @see AbstractWorker.getSalaryType
      */
-    fun getSalaryType(): SalaryType = SalaryType.toEnum(salaryTypeCombobox.value)!!
+    private fun getSalaryType(): SalaryType = SalaryType.toEnum(salaryTypeCombobox.value)!!
 
     /**
      * @return введенная ставка
      * @see AbstractWorker.getRate
      */
-    fun getRate(): Double = rateInput.text.toDoubleOrNull()!!
+    private fun getRate(): Double = rateInput.text.toDoubleOrNull()!!
 
     /**
      * @return трудозатраты
      * @see AbstractWorker.effortInterval
      */
-    fun getEffortInterval(): Double = effortIntervalInput.text.toDoubleOrNull()!!
+    private fun getWorkTime(): Double = workTime.text.toDoubleOrNull()!!
+
+    fun createWorker(): AbstractWorker? {
+        var worker: AbstractWorker? = null
+        if (okClicked) {
+            try {
+                worker = WorkerFactory.create(
+                        getSalaryType(),
+                        nameInput.text,
+                        surnameInput.text,
+                        beginDate.value,
+                        endDate.value,
+                        getRate(),
+                        getWorkTime(),
+                        workTimeNorm.text.toDoubleOrNull()
+                )
+            } catch (ex: Exception) {
+                val dialog = Alert(Alert.AlertType.ERROR)
+                dialog.title = "Ошибка"
+                dialog.headerText = "Ошибка при создании нового работника"
+                dialog.contentText = ex.message
+                dialog.showAndWait()
+            }
+        }
+        return worker
+    }
 }

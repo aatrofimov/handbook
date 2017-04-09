@@ -26,26 +26,13 @@ class HourWorker(name: String, surname: String, beginDate: LocalDate) :
             field = value
         }
 
-    /**
-     * Количество отработанных часов
-     */
-    var workTime: Double = .0
-        set(value) {
-            validateWorkTime(value)
-            field = value
-        }
-
     override fun getSalaryType(): SalaryType {
         return SalaryType.Hour
     }
 
     override fun getSalary(): Double = Math.floor(100 * hourRate * workTime) / 100
-//
-//    override fun getSalaryInternal(duration: Double): Double {
-//        return duration.times(hourRate)
-//    }
-//
-//    override fun getRate(): Double = hourRate
+
+    override fun getRate(): Double = Math.floor(100 * hourRate) / 100
 
     override fun equals(other: Any?): Boolean {
         if (other !is HourWorker || this.javaClass != other.javaClass) {

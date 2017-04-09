@@ -98,10 +98,7 @@ class MainApp : Application() {
         val controller = loader.getController<WorkerEditDialogController>()
         controller.dialogStage = dialogStage
         dialogStage.showAndWait()
-        if (controller.okClicked) {
-            return WorkerFactory.create(controller.getSalaryType(), controller.getRate(), controller.getEffortInterval())
-        }
-        return null
+        return controller.createWorker()
     }
 
     /**

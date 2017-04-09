@@ -15,14 +15,9 @@ enum class SalaryType(private val type: String) {
     Hour("Почасовая"),
 
     /**
-     * Оклад
-     */
-    Salary("Оклад"),
-
-    /**
      * Ставка
      */
-    Wage("Ставка");
+    Wage("Оклад");
 
     companion object {
         /**
@@ -31,8 +26,7 @@ enum class SalaryType(private val type: String) {
         fun toEnum(type: String) =
                 when (type) {
                     "Почасовая" -> Hour
-                    "Оклад" -> Salary
-                    "Ставка" -> Wage
+                    "Оклад" -> Wage
                     else -> null
                 }
     }

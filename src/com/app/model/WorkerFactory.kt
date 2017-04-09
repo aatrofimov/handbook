@@ -1,5 +1,7 @@
 package com.app.model
 
+import java.time.*
+
 /**
  * Created by IntelliJ IDEA.<br>
  * User: Alexey<br>
@@ -11,20 +13,31 @@ object WorkerFactory {
     /**
      *  Создаёт экземпляр работника
      *  @type Тип зарплаты
-     *  @rate Коэффициент зарплаты
-     *  @effortInterval Интервал времени (опционально)
+     *  @name Имя рабонтика
+     *  @surname Фамилия работника
+     *  @beginDate дата начала работы
+     *  @endDate дата окончания работы
+     *  @rate ставка или почасовая ставка
+     *  @workTime количество отработанных часов
+     *  @workTimeNorm норма часов в месяц
      *  @return AbstractWorker
      */
-    fun create(type: SalaryType, rate: Double, effortInterval: Double = -.1): AbstractWorker {
+    fun create(
+            type: SalaryType,
+            name: String,
+            surname: String,
+            beginDate: LocalDate,
+            endDate: LocalDate? = null,
+            rate: Double,
+            workTime: Double,
+            WorkTimeNorm:
+            Double? = null): AbstractWorker {
         val worker: AbstractWorker
         when (type) {
-            SalaryType.Hour -> worker = HourWorker(rate)
-            SalaryType.Salary -> worker = SalaryWorker(rate)
-            SalaryType.Wage -> worker = WageWorker(rate)
+            SalaryType.Hour -> worker = HourWorker(name, surname, beginDate, rate, workTime)
+            SalaryType.Wage -> worker = WageWorker(name, surname, beginDate, rate, workTime, WorkTimeNorm!!)
         }
-        if (effortInterval >= 0) {
-            worker.effortInterval = effortInterval
-        }
+        worker.endDate = endDate
         return worker
     }
 }

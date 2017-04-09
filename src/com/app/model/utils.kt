@@ -25,3 +25,17 @@ fun validateIsPositive(value: Double, errorMes: String = "Значение до�
         throw IllegalArgumentException(errorMes)
     }
 }
+
+fun validateWorkTime(value: Double, errorMes: String = "Величина отработанного времени не должна быть больше 250") {
+    validateIsPositive(value)
+    if (value > 250) {
+        throw IllegalArgumentException(errorMes)
+    }
+}
+
+fun validateWorkTimeNorm(value: Double, errorMes: String = "Величина нормы рабочего времени не должна быть больше 192") {
+    validateIsPositive(value)
+    if (value > 192) {
+        throw IllegalArgumentException(errorMes)
+    }
+}

@@ -1,6 +1,7 @@
 package com.app.model
 
 import com.google.common.base.*
+import java.time.*
 
 /**
  * Created by IntelliJ IDEA.<br>
@@ -9,13 +10,36 @@ import com.google.common.base.*
  * Time: 1:53<br>
  * Работник со ставкой
  */
-class WageWorker() : AbstractWorker() {
-    constructor(wage: Double) : this() {
+class WageWorker(name: String, surname: String, beginDate: LocalDate) :
+        AbstractWorker(name, surname, beginDate) {
+
+    constructor(name: String, surname: String, beginDate: LocalDate, wage: Double, workTime: Double, workTimeNorm: Double) :
+            this(name, surname, beginDate) {
         this.wage = wage
+        this.workTime = workTime
+        this.workTimeNorm = workTimeNorm
     }
 
     /**
-     * Ставка
+     * Норма рабочего времени в текущем месяце
+     */
+    var workTimeNorm = .0
+        set(value) {
+            validateWorkTimeNorm(value)
+            field = value
+        }
+
+    /**
+     * Количество отработанных часов в месяц
+     */
+    var workTime = .0
+        set(value) {
+            validateWorkTime(value)
+            field = value
+        }
+
+    /**
+     * Оклад
      */
     var wage: Double = .0
         set(value) {
@@ -23,24 +47,20 @@ class WageWorker() : AbstractWorker() {
             field = value
         }
 
+    override fun getSalary(): Double = Math.floor(100 * wage * workTime / workTimeNorm) / 100
+
     override fun getSalaryType(): SalaryType {
         return SalaryType.Wage
     }
 
-    override fun getSalaryInternal(duration: Double): Double {
-        return duration.times(wage)
-    }
-
-    override fun getRate(): Double = wage
-
     override fun equals(other: Any?): Boolean {
-        if (other !is WageWorker || !this.javaClass.equals(other.javaClass)) {
+        if (other !is WageWorker || this.javaClass != other.javaClass) {
             return false
         }
-        return super.equals(other) && wage.equals(other.wage)
+        return super.equals(other) && workTimeNorm == other.workTimeNorm && workTime == other.workTime && wage == other.wage
     }
 
     override fun hashCode(): Int {
-        return Objects.hashCode(effortInterval, wage)
+        return Objects.hashCode(workTimeNorm, workTime, wage)
     }
 }

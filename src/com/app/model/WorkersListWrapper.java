@@ -22,12 +22,10 @@ public class WorkersListWrapper {
 	 * @return workers
 	 * @see AbstractWorker
 	 * @see HourWorker
-	 * @see SalaryWorker
 	 * @see WageWorker
 	 */
 	@XmlElements({
 		@XmlElement(name = "hourWorker", type = HourWorker.class),
-		@XmlElement(name = "salaryWorker", type = SalaryWorker.class),
 		@XmlElement(name = "wageWorker", type = WageWorker.class)
 	})
 	public List<AbstractWorker> getWorkers() {

@@ -5,6 +5,7 @@ import com.app.model.*
 import javafx.fxml.*
 import javafx.scene.control.*
 import javafx.stage.*
+import java.time.*
 import java.util.concurrent.*
 
 /**
@@ -96,6 +97,21 @@ class WorkerEditDialogController {
         private set
 
     /**
+     * Тестовые имена работников мужского пола
+     */
+    private val testMaleNames = listOf("Александр", "Сергей", "Алексей", "Дмитрий", "Андрей")
+
+    /**
+     * Тестовые имена работников женского пола
+     */
+    private val testFemaleNames = listOf("Елена", "Ольга", "Анна", "Ирина", "Мария")
+
+    /**
+     * Тестовые фамилии
+     */
+    private val testSurnames = listOf("Иванов", "Смирнов", "Кузнецов", "Попов", "Соколов")
+
+    /**
      * * Инициализация контроллера. Этот метод вызывается автоматически после загрузки fxml
      */
     @FXML
@@ -132,9 +148,20 @@ class WorkerEditDialogController {
     private fun handleGetRandomData() {
         val rnd = ThreadLocalRandom.current()
         rateInput.text = rnd.nextInt(1000).toString()
-        workTime.text = rnd.nextInt(1000).toString()
+        workTime.text = rnd.nextInt(200).toString()
         val types = SalaryType.values()
         salaryTypeCombobox.value = types[rnd.nextInt(types.size)].toString()
+        beginDate.value = LocalDate.of(2017, 1, 9)
+        surnameInput.text = testSurnames[rnd.nextInt(4)]
+        if (rnd.nextBoolean()) {
+            nameInput.text = testMaleNames[rnd.nextInt(4)]
+        } else {
+            nameInput.text = testFemaleNames[rnd.nextInt(4)]
+            surnameInput.text += "а"
+        }
+        if (salaryTypeCombobox.value == SalaryType.Wage.toString()) {
+            workTimeNorm.text = rnd.nextInt(140, 192).toString()
+        }
     }
 
     @FXML

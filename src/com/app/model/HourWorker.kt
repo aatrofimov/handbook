@@ -10,8 +10,10 @@ import java.time.*
  * Time: 1:48<br>
  * Работник с почасовой ставкой
  */
-class HourWorker(name: String, surname: String, beginDate: LocalDate) :
-        AbstractWorker(name, surname, beginDate) {
+class HourWorker : AbstractWorker {
+    constructor() : super()
+
+    constructor(name: String, surname: String, beginDate: LocalDate) : super(name, surname, beginDate)
 
     constructor(name: String, surname: String, beginDate: LocalDate, hourRate: Double, workTime: Double) : this(name, surname, beginDate) {
         this.hourRate = hourRate
@@ -25,6 +27,7 @@ class HourWorker(name: String, surname: String, beginDate: LocalDate) :
             validateIsPositive(value)
             field = value
         }
+
 
     override fun getSalaryType(): SalaryType {
         return SalaryType.Hour

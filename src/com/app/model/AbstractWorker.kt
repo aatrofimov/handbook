@@ -10,21 +10,25 @@ import java.time.*
  * Time: 1:30<br>
  * Абстрактный работник
  */
-abstract class AbstractWorker
-(
-        /**
-         * Имя работника
-         */
-        var name: String,
-        /**
-         * Фамилия работника
-         */
-        var surname: String,
+abstract class AbstractWorker() {
+    /**
+     * Имя работника
+     */
+    var name: String = ""
+    /**
+     * Фамилия работника
+     */
+    var surname: String = ""
+    /**
+     * Дата начала работы
+     */
+    var beginDate: LocalDate = LocalDate.now()
 
-        /**
-         * Дата начала работы
-         */
-        var beginDate: LocalDate) {
+    constructor(name: String, surname: String, beginDate: LocalDate) : this() {
+        this.name = name
+        this.surname = surname
+        this.beginDate = beginDate
+    }
 
     /**
      * дата окончания работы (

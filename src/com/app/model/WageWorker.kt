@@ -10,8 +10,11 @@ import java.time.*
  * Time: 1:53<br>
  * Работник со ставкой
  */
-class WageWorker(name: String, surname: String, beginDate: LocalDate) :
-        AbstractWorker(name, surname, beginDate) {
+class WageWorker : AbstractWorker {
+
+    constructor() : super()
+
+    constructor(name: String, surname: String, beginDate: LocalDate) : super(name, surname, beginDate)
 
     constructor(name: String, surname: String, beginDate: LocalDate, wage: Double, workTime: Double, workTimeNorm: Double) :
             this(name, surname, beginDate) {

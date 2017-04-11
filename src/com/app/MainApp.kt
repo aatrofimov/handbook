@@ -7,6 +7,7 @@ import javafx.collections.*
 import javafx.fxml.*
 import javafx.scene.*
 import javafx.scene.control.*
+import javafx.scene.image.*
 import javafx.scene.layout.*
 import javafx.stage.*
 import java.io.*
@@ -40,13 +41,26 @@ class MainApp : Application() {
     companion object {
         @JvmStatic
         fun main(arg: Array<String>) {
+            if (arg.isNotEmpty()) {
+                filePath = arg[0]
+            }
             launch(MainApp::class.java)
         }
+
+        /**
+         * Путь к файлу, получаемый при передаче пути в качестве параметра при запуске
+         */
+        var filePath = ""
     }
 
     override fun start(primaryStage: Stage) {
         this.primaryStage = primaryStage
-        setFilePath(null)
+        this.primaryStage.icons.add(Image("file:resources/images/handbook.png"))
+        if (filePath.isNotEmpty()) {
+            loadPersonDataFromFile(File(filePath))
+        } else {
+            setFilePath(null)
+        }
         initRootLayout()
         showWorkersOverview()
     }

@@ -1,10 +1,7 @@
 package com.app.view
 
 import com.app.*
-import com.app.model.*
-import javafx.beans.property.*
 import javafx.fxml.*
-import javafx.scene.control.*
 import javafx.stage.*
 import java.io.*
 
@@ -15,7 +12,7 @@ import java.io.*
  * Time: 17:26<br>
  * Контроллер таблицы просмотра работников
  */
-class WorkersOverviewController {
+class WorkersOverviewController : WorkersTableController() {
     companion object {
         /**
          * Расширение файлов приложения
@@ -33,86 +30,7 @@ class WorkersOverviewController {
         }
 
     /**
-     * Таблица работников
-     */
-    @FXML
-    private lateinit var workersTable: TableView<AbstractWorker>
-
-    /**
-     * Колонка "Имя"
-     * @see AbstractWorker.name
-     */
-    @FXML
-    private lateinit var nameCol: TableColumn<AbstractWorker, String>
-
-    /**
-     * Колонка "Фамилия"
-     * @see AbstractWorker.surname
-     */
-    @FXML
-    private lateinit var surnameCol: TableColumn<AbstractWorker, String>
-
-    /**
-     * Колонка "Дата начала работы"
-     * @see AbstractWorker.beginDate
-     */
-    @FXML
-    private lateinit var beginDateCol: TableColumn<AbstractWorker, String>
-
-    /**
-     * Колонка "Дата окончания работы"
-     * @see AbstractWorker.endDate
-     */
-    @FXML
-    private lateinit var endDateCol: TableColumn<AbstractWorker, String>
-
-    /**
-     * Колонка "Тип зарплаты"
-     * @see AbstractWorker.getSalaryType
-     */
-    @FXML
-    private lateinit var salaryTypeCol: TableColumn<AbstractWorker, String>
-
-    /**
-     * Колонка "Ставка"
-     * @see HourWorker.hourRate
-     * @see WageWorker.wage
-     */
-    @FXML
-    private lateinit var rateCol: TableColumn<AbstractWorker, Number>
-
-    /**
-     * Колонка "Интервал"
-     * @see AbstractWorker.workTime
-     */
-    @FXML
-    private lateinit var workTimeCol: TableColumn<AbstractWorker, Number>
-
-    /**
-     * Колонка "Зарплата"
-     * @see AbstractWorker.getSalary
-     */
-    @FXML
-    private lateinit var salaryCol: TableColumn<AbstractWorker, Number>
-
-    /**
-     * Инициализация контроллера. Этот метод вызывается автоматически после загрузки fxml
-     */
-    @FXML
-    private fun initialize() {
-        nameCol.setCellValueFactory { SimpleStringProperty(it.value.name) }
-        surnameCol.setCellValueFactory { SimpleStringProperty(it.value.surname) }
-        beginDateCol.setCellValueFactory { SimpleStringProperty(it.value.beginDate.toString()) }
-        endDateCol.setCellValueFactory { SimpleStringProperty(it.value.endDate?.toString() ?: "") }
-        salaryTypeCol.setCellValueFactory { SimpleStringProperty(it.value.getSalaryType().toString()) }
-        rateCol.setCellValueFactory { SimpleDoubleProperty(it.value.getRate()) }
-        workTimeCol.setCellValueFactory { SimpleDoubleProperty(it.value.workTime) }
-        workTimeCol.setCellValueFactory { SimpleDoubleProperty((it.value as WageWorker).workTimeNorm) }
-        salaryCol.setCellValueFactory { SimpleDoubleProperty(it.value.getSalary()) }
-    }
-
-    /**
-     * Обработчик кнопки удаления работника
+     * Обработчик кнопки удаления работника {
      */
     @FXML
     private fun handleRemoveWorker() {

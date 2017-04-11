@@ -2,7 +2,6 @@ package com.app.view
 
 import com.app.*
 import com.app.model.*
-import javafx.beans.property.*
 import javafx.collections.*
 import javafx.fxml.*
 import javafx.scene.control.*
@@ -16,46 +15,12 @@ import javafx.stage.*
  * Time: 10:51<br>
  * Контроллер формы поиска
  */
-class SearchFormController {
+class SearchFormController : WorkersTableController() {
     /**
      * Текстовое поле поиска
      */
     @FXML
     private lateinit var searchField: TextField
-
-    /**
-     * Таблица с результатами поиска
-     */
-    @FXML
-    private lateinit var workersTable: TableView<AbstractWorker>
-
-    /**
-     * Колонка "Тип зарплаты"
-     * @see AbstractWorker.getSalaryType
-     */
-    @FXML
-    private lateinit var salaryTypeCol: TableColumn<AbstractWorker, String>
-
-    /**
-     * Колонка "Коэффициент зарплаты"
-     * @see AbstractWorker.getRate
-     */
-    @FXML
-    private lateinit var rateCol: TableColumn<AbstractWorker, Number>
-
-    /**
-     * Колонка "Интервал"
-     * @see AbstractWorker.effortInterval
-     */
-    @FXML
-    private lateinit var effortIntervalCol: TableColumn<AbstractWorker, Number>
-
-    /**
-     * Колонка "Зарплата"
-     * @see AbstractWorker.getSalary
-     */
-    @FXML
-    private lateinit var salaryCol: TableColumn<AbstractWorker, Number>
 
     /**
      * Ссылка на контейнер для текущей формы поиска
@@ -73,28 +38,21 @@ class SearchFormController {
         }
 
     /**
-     * Инициализация контроллера. Этот метод вызывается автоматически после загрузки fxml
-     */
-    @FXML
-    private fun initialize() {
-        salaryTypeCol.setCellValueFactory { SimpleStringProperty(it.value.getSalaryType().toString()) }
-        //rateCol.setCellValueFactory { SimpleDoubleProperty(it.value.getRate()) }
-       // effortIntervalCol.setCellValueFactory { SimpleDoubleProperty(it.value.effortInterval) }
-        salaryCol.setCellValueFactory { SimpleDoubleProperty(it.value.getSalary()) }
-    }
-
-    /**
      * Обработчик кнопки поиска
      */
     @FXML
     private fun handleSearch() {
         val searchVal = searchField.text
-//        workersTable.items.setAll(FXCollections.observableArrayList<AbstractWorker>(mainApp!!.workersData).filter {
-//            it.effortInterval.toString().contains(searchVal, true) ||
-//                    it.getRate().toString().contains(searchVal, true) ||
-//                    it.getSalaryType().toString().contains(searchVal, true) ||
-//                    it.getSalary().toString().contains(searchVal, true)
-//        })
+        workersTable.items.setAll(FXCollections.observableArrayList<AbstractWorker>(mainApp!!.workersData).filter {
+                    it.name.contains(searchVal, true) ||
+                    it.surname.contains(searchVal, true) ||
+                    it.beginDate.toString().contains(searchVal, true) ||
+                    it.endDate?.toString()?.contains(searchVal, true) ?: false ||
+                    it.getRate().toString().contains(searchVal, true) ||
+                    it.getSalaryType().toString().contains(searchVal, true) ||
+                    it.getSalary().toString().contains(searchVal, true) ||
+                    (it as? WageWorker)?.workTimeNorm?.toString()?.contains(searchVal, true) ?: false
+        })
     }
 
     /**

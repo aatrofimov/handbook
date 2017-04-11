@@ -4,7 +4,7 @@
 #define MyAppName "HandBook"
 #define MyAppVersion "1.0"
 #define MyAppPublisher "TrofimovAA"
-#define MyAppExeName "lab2.exe"
+#define MyAppExeName "handbook.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -17,7 +17,7 @@ AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=yes
-OutputDir=C:\Users\TrofimovAA\IdeaProjects\handbook
+OutputDir=C:\Users\TrofimovAA\IdeaProjects\lab2
 OutputBaseFilename=setup
 Compression=lzma
 SolidCompression=yes
@@ -29,8 +29,8 @@ Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\TrofimovAA\IdeaProjects\handbook\out\artifacts\lab2\bundles\lab2\lab2.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\TrofimovAA\IdeaProjects\handbook\out\artifacts\lab2\bundles\lab2\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\TrofimovAA\IdeaProjects\lab2\out\artifacts\handbook\bundles\handbook\handbook.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\TrofimovAA\IdeaProjects\lab2\out\artifacts\handbook\bundles\handbook\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -40,3 +40,11 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
+[Registry]
+Root: HKCR; SubKey: .asd; ValueType: string; ValueData: handbook; Flags: uninsdeletevalue uninsdeletekeyifempty
+
+Root: HKCR; SubKey: handbook; Flags: uninsdeletekey
+Root: HKCR; SubKey: handbook\DefaultIcon; ValueType: string; ValueData: "{app}\handbook.ico";
+Root: HKCR; SubKey: handbook\shell; ValueType: string; ValueData: open;
+Root: HKCR; SubKey: handbook\shell\open;
+Root: HKCR; SubKey: handbook\shell\open\command; ValueType: string; ValueData: """{app}\handbook.exe"" ""%1""";

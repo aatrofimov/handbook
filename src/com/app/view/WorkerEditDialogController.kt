@@ -96,6 +96,27 @@ class WorkerEditDialogController {
     var okClicked = false
         private set
 
+    var worker: AbstractWorker? = null
+        set(value) {
+            field = value
+            if(worker != null) {
+                if (worker!!.getSalaryType() == SalaryType.Hour) {
+                    salaryTypeCombobox.selectionModel.selectFirst()
+                    setVisible(false)
+                } else {
+                    salaryTypeCombobox.selectionModel.selectLast()
+                    setVisible(true)
+                }
+                nameInput.text = worker!!.name
+                surnameInput.text = worker!!.surname
+                beginDate.value = worker!!.beginDate
+                endDate.value = worker!!.endDate
+                rateInput.text = worker!!.getRate().toString()
+                workTime.text = worker!!.workTime.toString()
+                workTimeNorm.text = (worker as? WageWorker)?.workTimeNorm?.toString() ?: ""
+            }
+        }
+
     /**
      * Тестовые имена работников мужского пола
      */

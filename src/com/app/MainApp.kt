@@ -116,6 +116,33 @@ class MainApp : Application() {
     }
 
     /**
+     * Открытие диалога реедактирования работника
+     * @return AbstractWorker
+     * @see AbstractWorker
+     */
+    fun showWorkerEditDialog(worker: AbstractWorker?): AbstractWorker? {
+        val loader = FXMLLoader()
+        loader.location = MainApp.javaClass.getResource("/com/app/view/WorkerEditDialog.fxml")
+        val dialogStage = Stage()
+        dialogStage.title = "Редактировать работника"
+        dialogStage.initModality(Modality.WINDOW_MODAL)
+        dialogStage.initOwner(primaryStage)
+        dialogStage.scene = Scene(loader.load())
+        val controller = loader.getController<WorkerEditDialogController>()
+        controller.worker = worker
+        controller.dialogStage = dialogStage
+        dialogStage.showAndWait()
+        val newWorker = controller.createWorker()
+        if (newWorker != null) {
+            val index = workersData.indexOf(worker)
+            workersData.remove(worker)
+            workersData.add(index, newWorker)
+            return newWorker
+        }
+        return worker
+    }
+
+    /**
      * Открытие окна формы поиска
      */
     fun showSearchForm() {

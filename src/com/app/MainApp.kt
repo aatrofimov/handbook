@@ -101,7 +101,7 @@ class MainApp : Application() {
      * @see AbstractWorker
      * @see WorkerFactory.create
      */
-    fun showWorkerEditDialog(): AbstractWorker? {
+    fun showWorkerCreateDialog(): AbstractWorker? {
         val loader = FXMLLoader()
         loader.location = MainApp.javaClass.getResource("/com/app/view/WorkerEditDialog.fxml")
         val dialogStage = Stage()

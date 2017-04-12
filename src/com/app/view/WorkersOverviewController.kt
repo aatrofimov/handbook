@@ -134,7 +134,7 @@ class WorkersOverviewController : WorkersTableController() {
      */
     @FXML
     private fun handleNewWorker() {
-        mainApp?.showWorkerEditDialog()?.let { mainApp?.workersData?.add(it) }
+        mainApp?.showWorkerCreateDialog()?.let { mainApp?.workersData?.add(it) }
     }
 
     /**

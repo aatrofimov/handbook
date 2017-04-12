@@ -19,6 +19,7 @@ abstract class AbstractWorker() {
             if (value.isEmpty()) {
                 throw IllegalArgumentException("Имя не может быть пустым")
             }
+            field = value
         }
 
     /**
@@ -29,6 +30,7 @@ abstract class AbstractWorker() {
             if (value.isEmpty()) {
                 throw IllegalArgumentException("Фамилия не может быть пустой")
             }
+            field = value
         }
 
     /**

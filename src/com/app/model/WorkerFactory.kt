@@ -30,8 +30,7 @@ object WorkerFactory {
             endDate: LocalDate? = null,
             rate: Double,
             workTime: Double,
-            WorkTimeNorm:
-            Double? = null): AbstractWorker {
+            WorkTimeNorm: Double? = null): AbstractWorker {
         val worker: AbstractWorker
         when (type) {
             SalaryType.Hour -> worker = HourWorker(name, surname, beginDate, rate, workTime)

@@ -15,10 +15,22 @@ abstract class AbstractWorker() {
      * Имя работника
      */
     var name: String = ""
+        set(value) {
+            if (value.isEmpty()) {
+                throw IllegalArgumentException("Имя не может быть пустым")
+            }
+        }
+
     /**
      * Фамилия работника
      */
     var surname: String = ""
+        set(value) {
+            if (value.isEmpty()) {
+                throw IllegalArgumentException("Фамилия не может быть пустой")
+            }
+        }
+
     /**
      * Дата начала работы
      */
@@ -35,8 +47,8 @@ abstract class AbstractWorker() {
      */
     var endDate: LocalDate? = null
         set(value) {
-            if (value != null && value.isBefore(beginDate) as Boolean) {
-                throw Exception("Дата окончания работы не может быть раньше даты начала")
+            if (value != null && value.isBefore(beginDate) || value == beginDate) {
+                throw IllegalArgumentException("Дата окончания работы не может быть раньше даты начала")
             }
         }
 

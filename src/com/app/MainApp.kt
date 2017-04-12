@@ -200,7 +200,6 @@ class MainApp : Application() {
             dialog.contentText = e.message
             dialog.showAndWait()
         }
-
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.app.model;
+package com.app.utils;
 
 import javax.xml.bind.annotation.adapters.*;
 import java.time.*;

@@ -9,5 +9,7 @@
 	value = LocalDateAdapter.class)
 package com.app.model;
 
+import com.app.utils.LocalDateAdapter;
+
 import javax.xml.bind.annotation.adapters.*;
 import java.time.*;

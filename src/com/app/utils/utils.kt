@@ -1,4 +1,4 @@
-package com.app.model
+package com.app.utils
 
 /**
  * Created by IntelliJ IDEA.<br>

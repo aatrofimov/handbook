@@ -110,7 +110,6 @@ class WorkerFactoryTest(
      */
     @Test
     fun isValidGetSalary() {
-        assertEquals("getSalaryTest", salary, WorkerFactory.create(type, name, surname, beginDate, endDate, rate, workTime, workTimeNorm).getSalary(), 0.0)
+        assertEquals("getSalaryTest", salary, worker.getSalary(), 0.0)
     }
-
 }

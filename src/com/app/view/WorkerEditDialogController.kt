@@ -25,6 +25,12 @@ class WorkerEditDialogController {
     lateinit var salaryTypeCombobox: ComboBox<String>
 
     /**
+     * Текстовое поле для отображения типа зарплат
+     */
+    @FXML
+    lateinit var salaryTypeInput: TextField
+
+    /**
      * Тествое поле ввода имени работника
      */
     @FXML
@@ -85,9 +91,32 @@ class WorkerEditDialogController {
     lateinit var randomDataButton: Button
 
     /**
+     * Кнопка "Отмена"
+     */
+    @FXML
+    lateinit var okButton: Button
+
+    /**
+     * Кнопка "Ок"
+     */
+    @FXML
+    lateinit var cancelButton: Button
+
+    /**
+     * Кнопка "Редактировать"
+     */
+    @FXML
+    lateinit var editButton: Button
+
+    /**
      * Ссылка на контейнер
      */
     lateinit var dialogStage: Stage
+
+    /**
+     * Ссылка на контроллер таблицы
+     */
+    var workerOverviewController: WorkersOverviewController? = null
 
     /**
      * Показывает, какая кнопка была нажата
@@ -95,6 +124,27 @@ class WorkerEditDialogController {
      */
     var okClicked = false
         private set
+
+    /**
+     * Доступно ли редактирование данных
+     */
+    var edited = false
+        set(value) {
+            salaryTypeCombobox.isVisible = value
+            salaryTypeInput.isVisible = !value
+            nameInput.isEditable = value
+            surnameInput.isEditable = value
+            rateInput.isEditable = value
+            workTime.isEditable = value
+            workTimeNorm.isEditable = value
+            beginDate.isEditable = value
+            endDate.isEditable = value
+            randomDataButton.isVisible = DEBUG_MODE && value
+            okButton.isVisible = value
+            cancelButton.isVisible = value
+            editButton.isVisible = false
+            field = value
+        }
 
     var worker: AbstractWorker? = null
         set(value) {
@@ -107,6 +157,7 @@ class WorkerEditDialogController {
                     salaryTypeCombobox.selectionModel.selectLast()
                     setVisible(true)
                 }
+                salaryTypeInput.text = worker!!.getSalaryType().toString()
                 nameInput.text = worker!!.name
                 surnameInput.text = worker!!.surname
                 beginDate.value = worker!!.beginDate
@@ -114,6 +165,7 @@ class WorkerEditDialogController {
                 rateInput.text = worker!!.getRate().toString()
                 workTime.text = worker!!.workTime.toString()
                 workTimeNorm.text = (worker as? WageWorker)?.workTimeNorm?.toString() ?: ""
+                editButton.isVisible = !edited
             }
         }
 
@@ -138,7 +190,7 @@ class WorkerEditDialogController {
     @FXML
     private fun initialize() {
         salaryTypeCombobox.items.addAll(SalaryType.values().map { it.toString() })
-        randomDataButton.isVisible = DEBUG_MODE
+        salaryTypeInput.isEditable = false
         setVisible(false)
     }
 
@@ -183,6 +235,15 @@ class WorkerEditDialogController {
         if (salaryTypeCombobox.value == SalaryType.Wage.toString()) {
             workTimeNorm.text = rnd.nextInt(140, 192).toString()
         }
+    }
+
+    /**
+     * Редактирование работника
+     */
+    @FXML
+    private fun handleEditPerson() {
+            worker = workerOverviewController!!.mainApp!!.showWorkerEditDialog(worker)
+            workerOverviewController!!.workersTable.selectionModel.select(worker)
     }
 
     @FXML

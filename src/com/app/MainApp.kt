@@ -88,8 +88,18 @@ class MainApp : Application() {
         try {
             val loader = FXMLLoader()
             loader.location = MainApp.javaClass.getResource("/com/app/view/WorkersOverview.fxml")
-            rootLayout.center = loader.load<Parent?>() as AnchorPane
-            loader.getController<WorkersOverviewController>().mainApp = this
+            val pane = loader.load<Parent?>() as AnchorPane
+            val workerDetailsLoader = FXMLLoader()
+            workerDetailsLoader.location = MainApp.javaClass.getResource("/com/app/view/WorkerEditDialog.fxml")
+            val overViewPane = workerDetailsLoader.load<Parent?>() as AnchorPane
+            (pane.children[0] as SplitPane).items[1] = overViewPane
+            rootLayout.center = pane
+            val workerDetailsController = workerDetailsLoader.getController<WorkerEditDialogController>()
+            workerDetailsController.edited = false
+            val controller = loader.getController<WorkersOverviewController>()
+            controller.mainApp = this
+            controller.workerDetailsController = workerDetailsController
+            workerDetailsController.workerOverviewController = controller
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -110,13 +120,14 @@ class MainApp : Application() {
         dialogStage.initOwner(primaryStage)
         dialogStage.scene = Scene(loader.load())
         val controller = loader.getController<WorkerEditDialogController>()
+        controller.edited = true
         controller.dialogStage = dialogStage
         dialogStage.showAndWait()
         return controller.createWorker()
     }
 
     /**
-     * Открытие диалога реедактирования работника
+     * Открытие диалога редактирования работника
      * @return AbstractWorker
      * @see AbstractWorker
      */
@@ -129,6 +140,7 @@ class MainApp : Application() {
         dialogStage.initOwner(primaryStage)
         dialogStage.scene = Scene(loader.load())
         val controller = loader.getController<WorkerEditDialogController>()
+        controller.edited = true
         controller.worker = worker
         controller.dialogStage = dialogStage
         dialogStage.showAndWait()
